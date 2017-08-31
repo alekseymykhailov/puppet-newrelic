@@ -114,6 +114,24 @@ define newrelic::php (
     notify               => Service[$newrelic_php_service],
   }
 
+  file { '/etc/php5/cli/conf.d/20-newrelic.ini':
+    ensure  => 'link',
+    target  => '/etc/php5/mods-available/newrelic.ini',
+  }
+
+  file { '/etc/php5/cli/conf.d/newrelic.ini':
+    ensure  => 'absent',
+  }
+
+  file { '/etc/php5/apache2/conf.d/20-newrelic.ini':
+    ensure  => 'link',
+    target  => '/etc/php5/mods-available/newrelic.ini',
+  }
+
+  file { '/etc/php5/apache2/conf.d/newrelic.ini':
+    ensure  => 'absent',
+  }
+
   file { '/etc/newrelic/newrelic.cfg':
     ensure  => $newrelic_daemon_cfgfile_ensure,
     path    => '/etc/newrelic/newrelic.cfg',
